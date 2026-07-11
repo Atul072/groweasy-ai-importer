@@ -20,22 +20,23 @@ export default function Home() {
       toast.error("Please upload a CSV file first.");
       return;
     }
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-    try {
-      setLoading(true);
+try {
+  setLoading(true);
 
-      const formData = new FormData();
-      formData.append("file", csvFile);
+  const formData = new FormData();
+  formData.append("file", csvFile);
 
-      const response = await axios.post(
-        "http://localhost:5000/api/import",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+  const response = await axios.post(
+    `${API_URL}/api/import`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
 
       setResult(response.data);
       console.log("API Response:", response.data);
